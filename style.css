@@ -1,0 +1,188 @@
+/* ===== Reset & Base ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: 'Outfit', sans-serif;
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Rich dark gradient background */
+    background: radial-gradient(ellipse at 50% 50%, #1a0a2e 0%, #0d0015 50%, #000000 100%);
+    perspective: 900px;
+    cursor: none;
+}
+
+/* ===== Custom Cursor Glow ===== */
+#custom-cursor {
+    position: fixed;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,182,193,0.8) 0%, rgba(255,105,180,0.3) 50%, transparent 70%);
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    box-shadow: 0 0 15px rgba(255,105,180,0.4);
+    will-change: transform;
+}
+
+/* ===== Sparkle Canvas ===== */
+#sparkles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ===== Parallax Scene ===== */
+#scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+    z-index: 1;
+}
+
+/* ===== Center Love Message ===== */
+#center-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    text-align: center;
+    pointer-events: none;
+    animation: messageBreath 4s ease-in-out infinite;
+}
+
+#center-message .msg-line {
+    display: block;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(42px, 8vw, 90px);
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 30%, #ffecd2 60%, #fcb69f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+}
+
+#center-message .msg-sub {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(14px, 2.5vw, 22px);
+    font-weight: 300;
+    color: rgba(255, 200, 210, 0.7);
+    margin-top: 8px;
+    letter-spacing: 6px;
+    text-transform: lowercase;
+}
+
+@keyframes messageBreath {
+    0%, 100% { opacity: 0.85; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+/* ===== Vignette Overlay ===== */
+#vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%);
+}
+
+/* ===== Floating Items ===== */
+.floating-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-style: preserve-3d;
+    animation: flyTowards linear infinite;
+    will-change: transform, opacity;
+}
+
+/* ===== Text Items ===== */
+.text-item {
+    font-family: 'Outfit', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #c9b8f0;
+    text-shadow: 0 0 10px rgba(142,197,252,0.4);
+    white-space: nowrap;
+}
+
+/* ===== Heart Items ===== */
+.heart-item {
+    font-size: 42px;
+    text-shadow: 0 0 14px rgba(255,59,59,0.5);
+}
+
+/* ===== Image Items ===== */
+.image-item {
+    width: 160px;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    object-fit: cover;
+    will-change: transform;
+}
+
+/* ===== Fly Towards Keyframes ===== */
+@keyframes flyTowards {
+    0% {
+        opacity: 0;
+        transform: translate3d(var(--startX), var(--startY), -3500px) scale(0.3) rotate(var(--rot, 0deg));
+    }
+    8% {
+        opacity: 1;
+    }
+    88% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(var(--endX), var(--endY), 900px) scale(1.6) rotate(calc(var(--rot, 0deg) + 15deg));
+    }
+}
+
+/* ===== Cursor Trail Particle ===== */
+.cursor-particle {
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0;
+    will-change: opacity, transform;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+    .image-item {
+        width: 100px;
+    }
+    .text-item {
+        font-size: 18px;
+    }
+    .heart-item {
+        font-size: 30px;
+    }
+}
