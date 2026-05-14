@@ -5,12 +5,21 @@
     box-sizing: border-box;
 }
 
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    background-color: #000; /* Forces dark background behind everything */
+}
+
 body {
     overflow: hidden;
     font-family: 'Outfit', sans-serif;
     color: white;
-    height: 100vh;
-    width: 100vw;
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed; /* Locks screen on mobile to prevent scroll bounce */
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,7 +80,7 @@ body {
 #center-message .msg-line {
     display: block;
     font-family: 'Dancing Script', cursive;
-    font-size: clamp(42px, 8vw, 90px);
+    font-size: clamp(32px, 12vw, 90px);
     font-weight: 700;
     background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 30%, #ffecd2 60%, #fcb69f 100%);
     -webkit-background-clip: text;
@@ -83,7 +92,7 @@ body {
 #center-message .msg-sub {
     display: block;
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(14px, 2.5vw, 22px);
+    font-size: clamp(12px, 4vw, 22px);
     font-weight: 300;
     color: rgba(255, 200, 210, 0.7);
     margin-top: 8px;
@@ -168,7 +177,14 @@ body {
 
 /* ===== Responsive ===== */
 @media (max-width: 600px) {
-    .image-item { width: 100px; }
-    .text-item { font-size: 18px; }
-    .heart-item { font-size: 30px; }
+    .image-item { width: 85px; }
+    .text-item { font-size: 16px; }
+    .heart-item { font-size: 24px; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    /* Hide custom cursor on touch devices */
+    #custom-cursor, .cursor-particle {
+        display: none !important;
+    }
 }

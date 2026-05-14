@@ -162,7 +162,7 @@ function App() {
         };
         tick();
 
-        // Input listeners
+        // Input listeners (Mouse/Touch)
         const updateMouse = (clientX, clientY) => {
             mouseX = (clientX / window.innerWidth - 0.5) * 2;
             mouseY = (clientY / window.innerHeight - 0.5) * 2;
@@ -178,8 +178,32 @@ function App() {
             updateMouse(t.clientX, t.clientY);
         };
 
+        // Gyroscope listener for mobile parallax
+        const handleDeviceOrientation = (e) => {
+            if (!e.gamma || !e.beta) return;
+            // gamma is the left-to-right tilt in degrees, where right is positive
+            // beta is the front-to-back tilt in degrees, where front is positive
+            const maxTilt = 30; // Max tilt angle to care about
+            
+            let tiltX = e.gamma;
+            let tiltY = e.beta;
+            
+            // Constrain tilt
+            if (tiltX > maxTilt) tiltX = maxTilt;
+            if (tiltX < -maxTilt) tiltX = -maxTilt;
+            // Adjust beta so that holding phone at 45deg is "neutral"
+            tiltY = tiltY - 45; 
+            if (tiltY > maxTilt) tiltY = maxTilt;
+            if (tiltY < -maxTilt) tiltY = -maxTilt;
+
+            // Map to -1 to 1 range
+            mouseX = tiltX / maxTilt;
+            mouseY = tiltY / maxTilt;
+        };
+
         window.addEventListener('mousemove', handleMouseMove);
         window.addEventListener('touchmove', handleTouchMove, { passive: true });
+        window.addEventListener('deviceorientation', handleDeviceOrientation);
 
         // Cleanup
         return () => {
@@ -187,6 +211,7 @@ function App() {
             window.removeEventListener('resize', resizeCanvas);
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('touchmove', handleTouchMove);
+            window.removeEventListener('deviceorientation', handleDeviceOrientation);
             particlePool.forEach(p => p.remove());
         };
     }, []);
